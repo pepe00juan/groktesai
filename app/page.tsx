@@ -1,76 +1,128 @@
 'use client';
 
-// ✅ Correcto (versión 2026)
 import { useChat } from '@ai-sdk/react';
-import { useState } from 'react';
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: '/api/chat',
   });
 
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
-
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 text-white">
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      backgroundColor: '#0a0a0a',
+      color: 'white',
+      fontFamily: 'system-ui, sans-serif'
+    }}>
       {/* Header */}
-      <div className="border-b border-zinc-800 p-4">
-        <h1 className="text-xl font-semibold flex items-center gap-2">
-          <span className="text-2xl">🚀</span>
-          Grok Chatbot (xAI)
-        </h1>
+      <div style={{
+        borderBottom: '1px solid #333',
+        padding: '16px',
+        fontSize: '20px',
+        fontWeight: 'bold'
+      }}>
+        🚀 Grok Chatbot (xAI Direct)
       </div>
 
-      {/* Mensajes */}
-      <div className="flex-1 overflow-auto p-6 space-y-6">
-        {messages.length === 0 && isFirstMessage && (
-          <div className="flex flex-col items-center justify-center h-full text-center">
-            <div className="text-6xl mb-4">👋</div>
-            <h2 className="text-2xl font-medium">Hola, ¿en qué te ayudo hoy?</h2>
-            <p className="text-zinc-400 mt-2">Estoy usando Grok directamente</p>
+      {/* Chat Area */}
+      <div style={{
+        flex: 1,
+        overflow: 'auto',
+        padding: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        {messages.length === 0 && (
+          <div style={{
+            textAlign: 'center',
+            marginTop: '80px'
+          }}>
+            <div style={{ fontSize: '60px', marginBottom: '20px' }}>👋</div>
+            <h2 style={{ fontSize: '28px', marginBottom: '12px' }}>
+              Hola, ¿en qué te ayudo hoy?
+            </h2>
+            <p style={{ color: '#888' }}>Estoy usando Grok-3 directamente</p>
           </div>
         )}
 
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            style={{
+              display: 'flex',
+              justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start'
+            }}
           >
             <div
-              className={`max-w-[80%] rounded-2xl px-5 py-3 ${
-                m.role === 'user'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-zinc-800 text-zinc-100'
-              }`}
+              style={{
+                maxWidth: '80%',
+                padding: '14px 18px',
+                borderRadius: '18px',
+                backgroundColor: m.role === 'user' ? '#2563eb' : '#1f1f1f',
+                color: m.role === 'user' ? 'white' : '#e5e5e5'
+              }}
             >
-              <p className="whitespace-pre-wrap">{m.content}</p>
+              <p style={{ whiteSpace: 'pre-wrap', margin: 0 }}>{m.content}</p>
             </div>
           </div>
         ))}
 
         {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-zinc-800 text-zinc-100 rounded-2xl px-5 py-3">
-              Pensando...
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{
+              padding: '14px 18px',
+              backgroundColor: '#1f1f1f',
+              borderRadius: '18px',
+              color: '#aaa'
+            }}>
+              Grok está pensando...
             </div>
           </div>
         )}
       </div>
 
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-zinc-800">
-        <div className="flex gap-3">
+      {/* Input Area */}
+      <form 
+        onSubmit={handleSubmit} 
+        style={{
+          padding: '16px',
+          borderTop: '1px solid #333',
+          backgroundColor: '#0a0a0a'
+        }}
+      >
+        <div style={{ display: 'flex', gap: '12px', maxWidth: '800px', margin: '0 auto' }}>
           <input
-            className="flex-1 bg-zinc-900 border border-zinc-700 focus:border-blue-500 rounded-2xl px-6 py-4 outline-none text-lg"
+            style={{
+              flex: 1,
+              backgroundColor: '#111',
+              border: '1px solid #444',
+              borderRadius: '9999px',
+              padding: '16px 24px',
+              fontSize: '17px',
+              outline: 'none',
+              color: 'white'
+            }}
             value={input}
             onChange={handleInputChange}
-            placeholder="Escribe tu mensaje..."
+            placeholder="Escribe tu mensaje aquí..."
             disabled={isLoading}
           />
           <button
             type="submit"
-            disabled={isLoading}
-            className="bg-white text-black px-8 rounded-2xl font-medium hover:bg-zinc-200 transition"
+            disabled={isLoading || !input.trim()}
+            style={{
+              backgroundColor: 'white',
+              color: 'black',
+              border: 'none',
+              padding: '0 28px',
+              borderRadius: '9999px',
+              fontWeight: '600',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              opacity: isLoading || !input.trim() ? 0.6 : 1
+            }}
           >
             Enviar
           </button>
