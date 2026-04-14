@@ -8,12 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "@ai-sdk/xai": "^1.0.0",
-    "ai": "^6.0.159",
-    "next": "^15.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
+  "next": "^15.2.0",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
+  "ai": "^4.0.0",           // ← este es el core
+  "@ai-sdk/xai": "^1.0.0",  // ← para Grok
+  "@ai-sdk/react": "^1.0.0" // ← ← ← este es el que faltaba
+},
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^22",

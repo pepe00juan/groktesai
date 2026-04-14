@@ -1,6 +1,7 @@
 'use client';
 
-import { useChat } from 'ai/react';
+// ✅ Correcto (versión 2026)
+import { useChat } from '@ai-sdk/react';
 import { useState } from 'react';
 
 export default function Home() {
