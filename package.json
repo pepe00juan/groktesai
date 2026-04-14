@@ -11,9 +11,9 @@
   "next": "^15.2.0",
   "react": "^19.0.0",
   "react-dom": "^19.0.0",
-  "ai": "^4.0.0",           // ← este es el core
-  "@ai-sdk/xai": "^1.0.0",  // ← para Grok
-  "@ai-sdk/react": "^1.0.0" // ← ← ← este es el que faltaba
+  "ai": "^4.0.0",           
+  "@ai-sdk/xai": "^1.0.0",  
+  "@ai-sdk/react": "^1.0.0" 
 },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",
