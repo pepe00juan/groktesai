@@ -5,34 +5,35 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages } = body;
+
+    console.log('📨 Mensajes recibidos:', messages?.length || 0);
 
     if (!messages || messages.length === 0) {
-      return new Response("No messages provided", { status: 400 });
+      return new Response('No messages', { status: 400 });
     }
 
     const result = streamText({
-      model: xai('grok-3'),           // Cambia a 'grok-4.20-reasoning' si quieres más poder
+      model: xai('grok-3-latest'),     // ← Cambiado a 'grok-3-latest' (más estable en 2026)
       messages,
       temperature: 0.7,
-      maxTokens: 1000,
+      maxTokens: 1200,
     });
 
-    return result.toDataStreamResponse({
-      headers: {
-        'Content-Type': 'text/event-stream',
-      },
-    });
+    console.log('✅ Stream creado correctamente');
+
+    return result.toDataStreamResponse();
 
   } catch (error: any) {
-    console.error('Error en API chat:', error);
-    
+    console.error('❌ Error en /api/chat:', error.message || error);
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Error al conectar con Grok',
-        details: error?.message 
-      }), 
-      { 
+        message: error?.message || 'Unknown error'
+      }),
+      {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       }

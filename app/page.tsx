@@ -71,19 +71,23 @@ export default function Home() {
         ))}
 
         {isLoading && (
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <div style={{
-              padding: '14px 18px',
-              backgroundColor: '#1f1f1f',
-              borderRadius: '18px',
-              color: '#aaa'
-            }}>
+          <div className="flex justify-start">
+          <div className="bg-zinc-800 text-zinc-100 rounded-2xl px-5 py-3">
+            
               Grok está pensando...
             </div>
-          </div>
-        )}
+            </div>
+            )}
       </div>
-
+          {/* Mostrar error si llega */}
+          {messages.length > 0 && messages[messages.length - 1]?.role === 'assistant' && 
+          messages[messages.length - 1].content === '' && (
+            <div className="flex justify-start">
+              <div className="bg-red-900 text-red-200 rounded-2xl px-5 py-3">
+                Error: No se recibió respuesta de Grok. Revisa la consola.
+              </div>
+            </div>
+          )}
       {/* Input Area */}
       <form 
         onSubmit={handleSubmit} 
